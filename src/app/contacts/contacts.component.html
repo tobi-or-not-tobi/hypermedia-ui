@@ -1,0 +1,5 @@
+<div *ngIf="(contacts$ | async) as contacts">
+  <div *ngFor="let contact of contacts.contacts" [title]="contact | json">
+    {{ contact.contact.firstName }} {{ contact.contact.lastName }}
+  </div>
+</div>
