@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-export interface Group { 
-    id: number;
-    name?: string;
-    description?: string;
-    created?: string;
+export interface Group {
+  id: number;
+  name?: string;
+  description?: string;
+  created?: string;
 }

@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-export interface HyLink { 
-    href: string;
-    rel: string;
-    method: string;
+export interface HyLink {
+  href: string;
+  rel: string;
+  method: string;
 }

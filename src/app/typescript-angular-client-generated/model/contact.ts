@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-export interface Contact { 
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
+export interface Contact {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
 }
