@@ -22,8 +22,6 @@ export class PaginationComponent {
   }
 
   change(form: NgForm) {
-    console.log(form.controls.page.value);
-    console.log(form.controls.pageSize.value);
     this.paginate.emit({
       page: form.controls.page.value,
       size: form.controls.pageSize.value
