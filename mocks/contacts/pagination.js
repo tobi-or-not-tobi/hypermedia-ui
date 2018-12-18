@@ -1,6 +1,6 @@
 var contactData = require('./data');
 
-let DEFAULT_PAGE_SIZE = 5;
+let DEFAULT_PAGE_SIZE = 25;
 
 getPage = query => {
   return query.page ? Number(query.page) : 1;

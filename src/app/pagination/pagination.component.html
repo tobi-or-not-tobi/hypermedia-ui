@@ -1,0 +1,34 @@
+<ng-container *ngIf="pagination">
+  <form #paginationForm="ngForm" (change)="change(paginationForm)">
+    <label>
+      page <input type="text" name="page" [(ngModel)]="pagination.page" />
+    </label>
+
+    <select name="pageSize" [(ngModel)]="pagination.size">
+      <option *ngFor="let num of [10, 25, 50, 100]">{{ num }}</option>
+    </select>
+  </form>
+
+  total: {{ pagination?.totalcount }} <br />
+
+  <app-link
+    rel="first"
+    [links]="pagination.links"
+    (open)="open($event.href)"
+  ></app-link>
+  <app-link
+    rel="previous"
+    [links]="pagination.links"
+    (open)="open($event.href)"
+  ></app-link>
+  <app-link
+    rel="next"
+    [links]="pagination.links"
+    (open)="open($event.href)"
+  ></app-link>
+  <app-link
+    rel="last"
+    [links]="pagination.links"
+    (open)="open($event.href)"
+  ></app-link>
+</ng-container>
