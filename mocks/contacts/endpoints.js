@@ -7,6 +7,7 @@ const getContactList = {
   method: 'GET',
   cache: false,
   template: {
+    pagination: (params, query) => pagination.create(query),
     contacts: (params, query) =>
       data.contacts.slice(
         (pagination.getPage(query) - 1) * pagination.getSize(query),
