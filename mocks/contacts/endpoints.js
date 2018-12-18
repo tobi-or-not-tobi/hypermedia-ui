@@ -1,11 +1,9 @@
-var g = require('dyson-generators');
 var data = require('./data');
 var pagination = require('./pagination');
 
 const getContactList = {
   path: '/contacts',
   method: 'GET',
-  cache: false,
   template: {
     pagination: (params, query) => pagination.create(query),
     contacts: (params, query) =>
@@ -17,4 +15,14 @@ const getContactList = {
   }
 };
 
-module.exports = [getContactList];
+const getContactDetails = {
+  path: '/contacts/:id',
+  method: 'GET',
+  template: pathParameters => {
+    return data.contacts.find(contact => {
+      return contact.contact.id === pathParameters.id;
+    });
+  }
+};
+
+module.exports = [getContactList, getContactDetails];
