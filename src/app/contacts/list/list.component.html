@@ -7,7 +7,11 @@
     ></app-link>
   -->
 
-  <div *ngFor="let contact of contacts" [title]="contact | json">
+  <div
+    *ngFor="let contact of contacts"
+    [title]="contact | json"
+    [routerLink]="['', 'contacts', contact.contact.id]"
+  >
     {{ contact.contact.firstName }} {{ contact.contact.lastName }}
     {{ contact.contact.email }}
   </div>
