@@ -12,8 +12,11 @@
 import { HyLinks } from './hyLinks';
 import { HyPagination } from './hyPagination';
 import { HyPaginationPagination } from './hyPaginationPagination';
+import { Contact } from './contact';
+import { HyContact } from './hyContact';
 
 export interface HyContacts {
+  contacts: Array<HyContact>;
   links?: Array<HyLink>;
   pagination?: HyPaginationPagination;
 }

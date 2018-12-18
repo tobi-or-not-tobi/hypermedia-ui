@@ -1,5 +1,7 @@
-<div *ngIf="(contacts$ | async) as contacts">
-  <div *ngFor="let contact of contacts.contacts" [title]="contact | json">
-    {{ contact.contact.firstName }} {{ contact.contact.lastName }}
-  </div>
-</div>
+<app-pagination
+  [pagination]="(contacts$ | async)?.pagination"
+  (openLink)="loadList($event)"
+  (paginate)="loadPage($event)"
+></app-pagination>
+
+<app-contact-list [contacts]="(contacts$ | async)?.contacts"></app-contact-list>

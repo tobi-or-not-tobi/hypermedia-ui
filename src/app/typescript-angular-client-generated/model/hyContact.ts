@@ -10,7 +10,9 @@
  * Do not edit the class manually.
  */ import { HyLink } from './hyLink';
 import { HyLinks } from './hyLinks';
+import { Contact } from './contact';
 
 export interface HyContact {
+  contact: Contact;
   links?: Array<HyLink>;
 }

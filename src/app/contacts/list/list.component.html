@@ -1,0 +1,14 @@
+<div *ngIf="contacts">
+  <!--
+    <app-link
+      type="create"
+      [links]="contacts.links"
+      (open)="launchDetails($event)"
+    ></app-link>
+  -->
+
+  <div *ngFor="let contact of contacts" [title]="contact | json">
+    {{ contact.contact.firstName }} {{ contact.contact.lastName }}
+    {{ contact.contact.email }}
+  </div>
+</div>
