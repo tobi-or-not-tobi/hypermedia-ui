@@ -7,8 +7,8 @@ import {
   AfterViewInit,
   ViewChild,
   ElementRef,
-  ChangeDetectorRef,
-  OnChanges
+  OnChanges,
+  HostListener
 } from '@angular/core';
 import { HyLink } from 'src/app/typescript-angular-client-generated';
 
@@ -24,8 +24,11 @@ export class LinkComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() link: HyLink;
 
   @Output() open = new EventEmitter<HyLink>();
+  @HostListener('click') onClick() {
+    this.go();
+  }
 
-  @ViewChild('contentWrapper') contentWrapper: ElementRef<HTMLElement>;
+  constructor(private ref: ElementRef) {}
 
   ngOnInit() {
     if (!this.rel || !this.links) return;
@@ -36,8 +39,8 @@ export class LinkComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    if (this.contentWrapper.nativeElement.childNodes.length === 0) {
-      this.contentWrapper.nativeElement.innerText = this.label || this.rel;
+    if (this.ref.nativeElement.childNodes.length === 0) {
+      this.ref.nativeElement.innerText = this.label || this.rel;
     }
   }
 
