@@ -26,10 +26,21 @@ const getContactDetails = {
   path: '/contacts/:id',
   method: 'GET',
   template: pathParameters => {
-    return data.contacts.find(contact => {
-      return contact.contact.id === pathParameters.id;
-    });
+    return data.contacts.find(
+      contact => contact.contact.id === pathParameters.id
+    );
   }
 };
 
-module.exports = [getContactList, getContactDetails];
+const patchContactDetails = {
+  path: '/contacts/:id',
+  method: 'PATCH',
+  template: (params, query, body) => {
+    const details = data.contacts.find(
+      contact => contact.contact.id === body.id
+    );
+    Object.assign(details.contact, body);
+  }
+};
+
+module.exports = [getContactList, getContactDetails, patchContactDetails];

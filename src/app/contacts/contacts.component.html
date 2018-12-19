@@ -1,7 +1,0 @@
-<app-pagination
-  [pagination]="(contacts$ | async)?.pagination"
-  (openLink)="loadList($event)"
-  (paginate)="loadPage($event)"
-></app-pagination>
-
-<app-contact-list [contacts]="(contacts$ | async)?.contacts"></app-contact-list>

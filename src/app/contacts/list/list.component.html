@@ -1,4 +1,12 @@
-<div *ngIf="contacts">
+<!--
+  <app-pagination
+    [pagination]="(contacts$ | async)?.pagination"
+    (openLink)="loadList($event)"
+    (paginate)="loadPage($event)"
+  ></app-pagination>
+-->
+
+<div *ngIf="(data$ | async) as data">
   <!--
     <app-link
       type="create"
@@ -8,9 +16,14 @@
   -->
 
   <div
-    *ngFor="let contact of contacts"
+    *ngFor="let contact of data.contacts"
     [title]="contact | json"
-    [routerLink]="['', 'contacts', contact.contact.id]"
+    [routerLink]="[
+      '',
+      'contacts',
+      contact.contact.id,
+      contact.contact.firstName + '-' + contact.contact.lastName
+    ]"
   >
     {{ contact.contact.firstName }} {{ contact.contact.lastName }}
     {{ contact.contact.email }}
