@@ -1,3 +1,5 @@
 <ng-container>
-  <button [disabled]="!isEnabled" (click)="go()">{{ label || rel }}</button>
+  <button #contentWrapper [disabled]="!isEnabled" (click)="go()">
+    <ng-content></ng-content>
+  </button>
 </ng-container>

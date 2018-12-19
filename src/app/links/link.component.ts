@@ -1,4 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  AfterViewInit,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { HyLink } from 'src/app/typescript-angular-client-generated';
 
 @Component({
@@ -6,7 +15,7 @@ import { HyLink } from 'src/app/typescript-angular-client-generated';
   templateUrl: './link.component.html',
   styleUrls: ['./link.component.scss']
 })
-export class LinkComponent implements OnInit {
+export class LinkComponent implements OnInit, AfterViewInit {
   @Input() rel: string;
   @Input() label: string;
   @Input() links: HyLink[];
@@ -14,11 +23,19 @@ export class LinkComponent implements OnInit {
 
   @Output() open = new EventEmitter<HyLink>();
 
+  @ViewChild('contentWrapper') contentWrapper: ElementRef<HTMLElement>;
+
   constructor() {}
 
   ngOnInit() {
     if (!this.rel || !this.links) return;
     this.resolveLink();
+  }
+
+  ngAfterViewInit() {
+    if (this.contentWrapper.nativeElement.childNodes.length === 0) {
+      this.contentWrapper.nativeElement.innerText = this.label || this.rel;
+    }
   }
 
   get isEnabled() {
