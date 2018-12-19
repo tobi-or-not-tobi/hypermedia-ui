@@ -13,12 +13,14 @@ const getContactList = {
         pagination.getPage(query),
         pagination.getSize(query)
       ),
-    contacts: (params, query) =>
-      data.contacts.slice(
+    contacts: (params, query) => {
+      data.sort();
+      return data.contacts.slice(
         (pagination.getPage(query) - 1) * pagination.getSize(query),
         (pagination.getPage(query) - 1) * pagination.getSize(query) +
           pagination.getSize(query)
-      )
+      );
+    }
   }
 };
 
