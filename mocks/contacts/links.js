@@ -1,5 +1,10 @@
 // var pagination = require('./pagination');
 
+listEndpoint = '/contacts';
+detailEndpoint = '/contacts/:id';
+patchEndpoint = '/v2/contacts/patcy/:id';
+deleteEndpoint = '/contacts/:id/delete';
+
 createListLinks = (query, page, size) => {
   return [
     {
@@ -18,17 +23,17 @@ createListLinks = (query, page, size) => {
 createDetailLinks = id => {
   return [
     {
-      href: `/contacts/${id}`,
+      href: resolveId(detailEndpoint, id),
       rel: 'self',
       method: 'GET'
     },
     {
-      href: `/contacts/${id}`,
+      href: resolveId(deleteEndpoint, id),
       rel: 'remove',
       method: 'DELETE'
     },
     {
-      href: `/contacts/${id}`,
+      href: resolveId(patchEndpoint, id),
       rel: 'update',
       method: 'PATCH'
     },
@@ -40,4 +45,17 @@ createDetailLinks = id => {
   ];
 };
 
-module.exports = { createListLinks, createDetailLinks };
+resolveId = (endpoint, id) => {
+  return endpoint.replace(':id', id);
+};
+
+module.exports = {
+  createListLinks,
+  createDetailLinks,
+  endpoints: {
+    listEndpoint,
+    detailEndpoint,
+    patchEndpoint,
+    deleteEndpoint
+  }
+};

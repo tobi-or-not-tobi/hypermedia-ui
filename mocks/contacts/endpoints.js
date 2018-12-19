@@ -3,8 +3,9 @@ var pagination = require('./pagination');
 var links = require('./links');
 
 const getContactList = {
-  path: '/contacts',
+  path: links.endpoints.listEndpoint,
   method: 'GET',
+  cache: false,
   template: {
     pagination: (params, query) => pagination.create(query),
     links: (params, query) =>
@@ -25,8 +26,9 @@ const getContactList = {
 };
 
 const getContactDetails = {
-  path: '/contacts/:id',
+  path: links.endpoints.detailEndpoint,
   method: 'GET',
+  cache: false,
   template: pathParameters => {
     return data.contacts.find(
       contact => contact.contact.id === pathParameters.id
@@ -35,8 +37,9 @@ const getContactDetails = {
 };
 
 const patchContactDetails = {
-  path: '/contacts/:id',
+  path: links.endpoints.patchEndpoint,
   method: 'PATCH',
+  cache: false,
   template: (params, query, body) => {
     const details = data.contacts.find(
       contact => contact.contact.id === body.id
