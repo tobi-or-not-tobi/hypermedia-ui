@@ -8,6 +8,7 @@ import { HyLink } from 'src/app/typescript-angular-client-generated';
 })
 export class LinkComponent implements OnInit {
   @Input() rel: string;
+  @Input() label: string;
   @Input() links: HyLink[];
   @Output() open = new EventEmitter<HyLink>();
 
