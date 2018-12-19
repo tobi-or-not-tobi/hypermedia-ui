@@ -8,7 +8,7 @@ import { ContactsService } from '../contacts.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent {
+export class ContactListComponent {
   public data$: Observable<HyContacts>;
 
   constructor(private contactService: ContactsService) {
