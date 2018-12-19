@@ -25,6 +25,15 @@ const getContactList = {
   }
 };
 
+const postContact = {
+  path: links.endpoints.postEndpoint,
+  method: 'POST',
+  cache: false,
+  template: (params, query, body) => {
+    data.create(body.firstName, body.lastName, body.email);
+  }
+};
+
 const getContactDetails = {
   path: links.endpoints.detailEndpoint,
   method: 'GET',
@@ -63,6 +72,7 @@ const deleteContactDetails = {
 
 module.exports = [
   getContactList,
+  postContact,
   getContactDetails,
   patchContactDetails,
   deleteContactDetails

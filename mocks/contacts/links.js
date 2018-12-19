@@ -1,6 +1,7 @@
 // var pagination = require('./pagination');
 
 listEndpoint = '/contacts';
+postEndpoint = '/contacts/postit';
 detailEndpoint = '/contacts/:id';
 patchEndpoint = '/v2/contacts/patcy/:id';
 deleteEndpoint = '/contacts/:id/delete';
@@ -13,7 +14,7 @@ createListLinks = (query, page, size) => {
       method: 'GET'
     },
     {
-      href: '/contacts',
+      href: postEndpoint,
       rel: 'create',
       method: 'POST'
     }
@@ -54,6 +55,7 @@ module.exports = {
   createDetailLinks,
   endpoints: {
     listEndpoint,
+    postEndpoint,
     detailEndpoint,
     patchEndpoint,
     deleteEndpoint
