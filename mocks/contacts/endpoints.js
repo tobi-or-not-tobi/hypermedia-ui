@@ -48,4 +48,22 @@ const patchContactDetails = {
   }
 };
 
-module.exports = [getContactList, getContactDetails, patchContactDetails];
+const deleteContactDetails = {
+  path: links.endpoints.deleteEndpoint,
+  method: 'DELETE',
+  cache: false,
+  template: pathParameters => {
+    const detail = data.contacts.find(
+      contact => contact.contact.id === pathParameters.id
+    );
+    const index = data.contacts.indexOf(detail);
+    data.contacts.splice(index, index + 1);
+  }
+};
+
+module.exports = [
+  getContactList,
+  getContactDetails,
+  patchContactDetails,
+  deleteContactDetails
+];
