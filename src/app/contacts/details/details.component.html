@@ -1,1 +1,47 @@
-<pre>{{ details$ | async | json }}</pre>
+<ng-container *ngIf="(details$ | async) as details">
+  <ng-container *ngIf="link?.rel === 'self'">
+    <div>
+      {{ details.contact.firstName }} {{ details.contact.lastName }}<br />
+      {{ details.contact.email }}<br />
+    </div>
+
+    <app-link rel="update" [links]="details.links" (open)="edit($event)"
+      >edit</app-link
+    >
+
+    <app-link rel="remove" [links]="details.links" (open)="remove($event)"
+      >trash</app-link
+    >
+  </ng-container>
+
+  <ng-container *ngIf="link?.rel === 'update' || link?.rel === 'create'">
+    <form #detailForm="ngForm" (submit)="save(detailForm)">
+      <input type="hidden" name="id" [(ngModel)]="details.contact.id" />
+      <label>
+        firstName
+        <input
+          type="text"
+          name="firstName"
+          [(ngModel)]="details.contact.firstName"
+        />
+      </label>
+
+      <label>
+        lastName
+        <input
+          type="text"
+          name="lastName"
+          [(ngModel)]="details.contact.lastName"
+        />
+      </label>
+
+      <label>
+        email
+        <input type="email" name="email" [(ngModel)]="details.contact.email" />
+      </label>
+
+      <button type="submit">save</button>
+    </form>
+  </ng-container>
+  <button type="button" (click)="cancel()">cancel</button>
+</ng-container>

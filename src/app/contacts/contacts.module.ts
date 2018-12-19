@@ -6,7 +6,6 @@ import { ContactListComponent } from './list/list.component';
 import { PaginationModule } from '../pagination/pagination.module';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ContactFormComponent } from './form/form.component';
 import { ContactsService } from './contacts.service';
 const routes: Routes = [
   {
@@ -23,11 +22,7 @@ const routes: Routes = [
     PaginationModule,
     FormsModule
   ],
-  declarations: [
-    ContactDetailsComponent,
-    ContactListComponent,
-    ContactFormComponent
-  ],
+  declarations: [ContactDetailsComponent, ContactListComponent],
   providers: [ContactsService]
 })
 export class ContactsModule {}

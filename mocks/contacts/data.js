@@ -3,7 +3,7 @@ var faker = require('faker');
 
 var links = require('./links');
 
-const TOTAL_COUNT = 100;
+const TOTAL_COUNT = 25;
 
 const contacts = [];
 

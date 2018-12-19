@@ -1,31 +1,34 @@
-<!--
+<app-contact-details [link]="link"></app-contact-details>
+
+<div *ngIf="(list$ | async) as data">
   <app-pagination
-    [pagination]="(contacts$ | async)?.pagination"
-    (openLink)="loadList($event)"
-    (paginate)="loadPage($event)"
+    [pagination]="data.pagination"
+    (openLink)="openLink($event)"
+    (paginate)="test($event)"
   ></app-pagination>
--->
 
-<div *ngIf="(data$ | async) as data">
-  <!--
+  <app-link
+    rel="create"
+    [links]="data.links"
+    (open)="create($event)"
+  ></app-link>
+
+  <div *ngFor="let item of data.contacts">
     <app-link
-      type="create"
-      [links]="contacts.links"
-      (open)="launchDetails($event)"
-    ></app-link>
-  -->
+      [link]=""
+      rel="self"
+      [links]="item.links"
+      (open)="open(item, 'self')"
+      >open
+    </app-link>
 
-  <div
-    *ngFor="let contact of data.contacts"
-    [title]="contact | json"
-    [routerLink]="[
-      '',
-      'contacts',
-      contact.contact.id,
-      contact.contact.firstName + '-' + contact.contact.lastName
-    ]"
-  >
-    {{ contact.contact.firstName }} {{ contact.contact.lastName }}
-    {{ contact.contact.email }}
+    {{ item.contact.firstName }} {{ item.contact.lastName }}
+
+    <app-link rel="update" [links]="item.links" (open)="open(item, 'update')"
+      >edit</app-link
+    >
+    <app-link rel="remove" [links]="item.links" (open)="open(item, 'remove')"
+      >trash</app-link
+    >
   </div>
 </div>
