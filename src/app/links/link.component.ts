@@ -10,15 +10,15 @@ export class LinkComponent implements OnInit {
   @Input() rel: string;
   @Input() label: string;
   @Input() links: HyLink[];
-  @Output() open = new EventEmitter<HyLink>();
-
   @Input() link: HyLink;
+
+  @Output() open = new EventEmitter<HyLink>();
 
   constructor() {}
 
   ngOnInit() {
     if (!this.rel || !this.links) return;
-    this.link = this.links.find(l => l.rel === this.rel);
+    this.resolveLink();
   }
 
   get isEnabled() {
@@ -27,5 +27,11 @@ export class LinkComponent implements OnInit {
 
   go() {
     this.open.emit(this.link);
+  }
+
+  private resolveLink() {
+    this.link = this.links.find(l => {
+      return l.rel === this.rel;
+    });
   }
 }
