@@ -9,14 +9,17 @@ The aim of this small client is to validate the usage and complexity of an _expl
 
 - clone the repo
 - install dependencies (`npm install`)
-- run the mockserver (`npm run mockserver`)
 - run the application in a separate terminal (`npm run start`)
+
+The client has a hardcoded, but configurable backend. The baseUrl can be configured at the `BASE_PATH` in the `AppModule`:
 
 ### Mock server
 
 In order to test the client locally, an implementation for mocks was used. Instead of using ([json-server](https://github.com/typicode/json-server)), this time [dyson](https://github.com/webpro/dyson) was used as it offered more flexilibity.
 
 The mock generates some random _relations_ to demonstrate that the UI response to the backend.
+
+The mock server can be started with `npm run mockserver`.
 
 ## Explorable API
 
