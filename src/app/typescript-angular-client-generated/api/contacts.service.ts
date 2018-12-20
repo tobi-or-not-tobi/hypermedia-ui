@@ -543,6 +543,7 @@ export class ContactsService {
 
     return this.httpClient.put(
       `${this.basePath}/contacts/${encodeURIComponent(String(contactId))}`,
+      body,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,
