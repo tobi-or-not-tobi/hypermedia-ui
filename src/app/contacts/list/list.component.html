@@ -7,7 +7,7 @@
       <app-pagination
         [pagination]="data.pagination"
         (openLink)="openLink($event)"
-        (paginate)="test($event)"
+        (paginate)="paginate($event)"
       ></app-pagination>
     </div>
     <div class="column"></div>
@@ -30,7 +30,7 @@
         </div>
 
         <a
-          class="panel-block"
+          class="panel-block has-icons-right"
           [link]
           linkRel="self"
           [linkItems]="item.links"
@@ -39,6 +39,27 @@
         >
           <span class="panel-icon">
             <i class="fas fa-user" aria-hidden="true"></i>
+          </span>
+
+          <span class="is-right">
+            <a
+              class="panel-icon"
+              [link]
+              linkRel="update"
+              [linkItems]="item.links"
+              (open)="open(item, 'update')"
+            >
+              <i class="fas fa-edit"></i>
+            </a>
+            <a
+              class="panel-icon"
+              [link]
+              linkRel="remove"
+              [linkItems]="item.links"
+              (open)="open(item, 'remove')"
+            >
+              <i class="fas fa-trash"></i>
+            </a>
           </span>
 
           {{ item.contact.firstName }} {{ item.contact.lastName }}

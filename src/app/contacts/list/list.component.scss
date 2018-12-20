@@ -1,0 +1,13 @@
+.has-icons-right {
+  position: relative;
+
+  .is-right {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.panel-icon[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

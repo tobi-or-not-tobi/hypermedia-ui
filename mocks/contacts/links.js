@@ -22,28 +22,34 @@ createListLinks = (query, page, size) => {
 };
 
 createDetailLinks = id => {
-  return [
-    {
-      href: resolveId(detailEndpoint, id),
-      rel: 'self',
-      method: 'GET'
-    },
-    {
-      href: resolveId(deleteEndpoint, id),
-      rel: 'remove',
-      method: 'DELETE'
-    },
-    {
+  const random_edit = Math.random() >= 0.5;
+  const random_delete = random_edit && Math.random() >= 0.5;
+  const links = [];
+  links.push({
+    href: resolveId(detailEndpoint, id),
+    rel: 'self',
+    method: 'GET'
+  });
+  if (random_edit) {
+    links.push({
       href: resolveId(patchEndpoint, id),
       rel: 'update',
       method: 'PATCH'
-    },
-    {
+    });
+    links.push({
       href: `/contacts/${id}`,
       rel: 'replace',
       method: 'PUT'
-    }
-  ];
+    });
+  }
+  if (random_delete) {
+    links.push({
+      href: resolveId(deleteEndpoint, id),
+      rel: 'remove',
+      method: 'DELETE'
+    });
+  }
+  return links;
 };
 
 resolveId = (endpoint, id) => {
