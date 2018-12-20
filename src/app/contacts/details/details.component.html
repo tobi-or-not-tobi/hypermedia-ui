@@ -96,38 +96,3 @@
     </footer>
   </form>
 </div>
-<!-- 
-<ng-container *ngIf="(details$ | async) as details">
-  
-
-  <ng-container *ngIf="link?.rel === 'update' || link?.rel === 'create'">
-    <form #detailForm="ngForm" (submit)="save(detailForm)">
-      <input type="hidden" name="id" [(ngModel)]="details.contact.id" />
-      <label>
-        firstName
-        <input
-          type="text"
-          name="firstName"
-          [(ngModel)]="details.contact.firstName"
-        />
-      </label>
-
-      <label>
-        lastName
-        <input
-          type="text"
-          name="lastName"
-          [(ngModel)]="details.contact.lastName"
-        />
-      </label>
-
-      <label>
-        email
-        <input type="email" name="email" [(ngModel)]="details.contact.email" />
-      </label>
-
-      <button type="submit">save</button>
-    </form>
-  </ng-container>
-  <button type="button" (click)="cancel()">cancel</button>
-</ng-container> -->
