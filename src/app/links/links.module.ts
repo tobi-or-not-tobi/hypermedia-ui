@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { LinkComponent } from './link.component';
+import { LinkDirective } from './link.directive';
 
 @NgModule({
-  declarations: [LinkComponent],
+  declarations: [LinkDirective],
   imports: [CommonModule],
-  exports: [LinkComponent]
+  exports: [LinkDirective]
 })
 export class LinksModule {}
