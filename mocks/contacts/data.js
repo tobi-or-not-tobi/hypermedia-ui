@@ -1,4 +1,3 @@
-var g = require('dyson-generators');
 var faker = require('faker');
 
 var links = require('./links');
@@ -8,7 +7,7 @@ const TOTAL_COUNT = 25;
 const contacts = [];
 
 create = (firstName, lastName, email) => {
-  const id = g.id();
+  const id = faker.random.uuid();
   contacts.push({
     contact: {
       id: id,
