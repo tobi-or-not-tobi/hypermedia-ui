@@ -35,4 +35,8 @@ while (contacts.length < TOTAL_COUNT) {
   create(faker.name.firstName(), faker.name.lastName(), faker.internet.email());
 }
 
-module.exports = { contacts, create, sort };
+getContacts = () => {
+  return contacts;
+};
+
+module.exports = { getContacts, create, sort };

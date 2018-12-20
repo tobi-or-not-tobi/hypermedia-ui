@@ -16,11 +16,13 @@ const getContactList = {
       ),
     contacts: (params, query) => {
       data.sort();
-      return data.contacts.slice(
-        (pagination.getPage(query) - 1) * pagination.getSize(query),
-        (pagination.getPage(query) - 1) * pagination.getSize(query) +
-          pagination.getSize(query)
-      );
+      return data
+        .getContacts()
+        .slice(
+          (pagination.getPage(query) - 1) * pagination.getSize(query),
+          (pagination.getPage(query) - 1) * pagination.getSize(query) +
+            pagination.getSize(query)
+        );
     }
   }
 };
@@ -39,9 +41,9 @@ const getContactDetails = {
   method: 'GET',
   cache: false,
   template: pathParameters => {
-    return data.contacts.find(
-      contact => contact.contact.id === pathParameters.id
-    );
+    return data
+      .getContacts()
+      .find(contact => contact.contact.id === pathParameters.id);
   }
 };
 
@@ -50,9 +52,9 @@ const patchContactDetails = {
   method: 'PATCH',
   cache: false,
   template: (params, query, body) => {
-    const details = data.contacts.find(
-      contact => contact.contact.id === body.id
-    );
+    const details = data.getContacts().find(contact => {
+      return contact && contact.contact.id === body.id;
+    });
     Object.assign(details.contact, body);
   }
 };
@@ -65,7 +67,7 @@ const deleteContactDetails = {
     const detail = data.contacts.find(
       contact => contact.contact.id === pathParameters.id
     );
-    const index = data.contacts.indexOf(detail);
+    const index = data.getContacts().indexOf(detail);
     data.contacts.splice(index, index + 1);
   }
 };
