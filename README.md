@@ -5,6 +5,13 @@ The aim of this small client is to validate the usage and complexity of an _expl
 1. Configurable endpoints – avoid hardcoded endpoints in the client
 2. Avoid business logic – clients simply follow links to certain actions rather then implement business logic themselves
 
+## Setup instructions
+
+- clone the repo
+- install dependencies (`npm install`)
+- run the mockserver (`npm run mockserver`)
+- run the application in a separate terminal (`npm run start`)
+
 ## Explorable API
 
 The API provides links using the following format:
