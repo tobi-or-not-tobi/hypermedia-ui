@@ -1,18 +1,104 @@
-<ng-container *ngIf="(details$ | async) as details">
-  <ng-container *ngIf="link?.rel === 'self'">
-    <div>
-      {{ details.contact.firstName }} {{ details.contact.lastName }}<br />
-      {{ details.contact.email }}<br />
+<div class="card" *ngIf="(details$ | async) as details">
+  <form #detailForm="ngForm" (submit)="save(detailForm)">
+    <ng-container *ngIf="hyLink?.rel !== 'create'">
+      <div class="card-image" [class.collapse]="hyLink?.rel !== 'self'">
+        <figure class="image is-4by3">
+          <img
+            [src]="
+              'https://loremflickr.com/daily/g/320/240/boy?' +
+              details.contact.id
+            "
+            alt="Placeholder image"
+          />
+        </figure>
+      </div>
+
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left">
+            <figure class="image is-48x48">
+              <img
+                [src]="
+                  'https://loremflickr.com/daily/g/320/240/boy?' +
+                  details.contact.id
+                "
+                alt="Placeholder image"
+              />
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-4">
+              {{ details.contact.firstName }} {{ details.contact.lastName }}
+            </p>
+            <p class="subtitle is-6">{{ details.contact.email }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div
+      class="card-content"
+      *ngIf="hyLink?.rel === 'update' || hyLink?.rel === 'create'"
+    >
+      <input type="hidden" name="id" [(ngModel)]="details.contact.id" />
+      <div
+        class="field"
+        *ngFor="let field of ['firstName', 'lastName', 'email']"
+      >
+        <label class="label">{{ field }}</label>
+        <div class="control" [class.has-icons-left]="field === 'email'">
+          <input
+            class="input"
+            type="text"
+            required
+            placeholder="Text input"
+            [name]="field"
+            [(ngModel)]="details.contact[field]"
+          />
+
+          <span *ngIf="field === 'email'" class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </div>
+      </div>
     </div>
 
-    <app-link rel="update" [links]="details.links" (open)="edit($event)"
-      >edit</app-link
-    >
+    <footer class="card-footer">
+      <ng-container *ngIf="hyLink?.rel === 'self'">
+        <a class="card-footer-item" (click)="cancel()">cancel</a>
+        <a
+          link
+          linkRel="update"
+          class="card-footer-item"
+          [linkItems]="details.links"
+          (open)="edit($event)"
+          >Edit</a
+        >
 
-    <app-link rel="remove" [links]="details.links" (open)="remove($event)"
-      >trash</app-link
-    >
-  </ng-container>
+        <a
+          class="card-footer-item"
+          link
+          linkRel="remove"
+          [linkItems]="details.links"
+          (open)="remove($event)"
+          >Delete</a
+        >
+      </ng-container>
+
+      <ng-container *ngIf="hyLink?.rel === 'update'">
+        <a class="card-footer-item" (click)="resetEdit()">cancel</a>
+        <a class="card-footer-item" (click)="save(detailForm)">save</a>
+      </ng-container>
+
+      <ng-container *ngIf="hyLink?.rel === 'create'">
+        <a class="card-footer-item" (click)="cancel()">cancel</a>
+        <a class="card-footer-item" (click)="save(detailForm)">save</a>
+      </ng-container>
+    </footer>
+  </form>
+</div>
+<!-- 
+<ng-container *ngIf="(details$ | async) as details">
+  
 
   <ng-container *ngIf="link?.rel === 'update' || link?.rel === 'create'">
     <form #detailForm="ngForm" (submit)="save(detailForm)">
@@ -44,4 +130,4 @@
     </form>
   </ng-container>
   <button type="button" (click)="cancel()">cancel</button>
-</ng-container>
+</ng-container> -->

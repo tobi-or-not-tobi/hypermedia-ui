@@ -9,6 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { ContactsService } from './contacts.service';
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'contacts',
+    pathMatch: 'full'
+  },
+  {
     path: 'contacts',
     component: ContactListComponent
   }

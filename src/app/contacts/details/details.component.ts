@@ -19,7 +19,8 @@ const ENDPOINT = '/contacts';
   styleUrls: ['./details.component.scss']
 })
 export class ContactDetailsComponent {
-  @Input() link;
+  @Input() hyLink;
+  self;
 
   details$: Observable<HyContact>;
 
@@ -34,7 +35,8 @@ export class ContactDetailsComponent {
   }
 
   edit(link: HyLink) {
-    this.link = link;
+    this.self = this.hyLink;
+    this.hyLink = link;
   }
 
   remove(link: HyLink) {
@@ -43,10 +45,21 @@ export class ContactDetailsComponent {
 
   save(form: NgForm) {
     if (form.value.id) {
-      this.contactService.patch(this.link.href, form.value);
+      this.contactService
+        .patch(this.hyLink.href, form.value)
+        .subscribe(() => this.resetEdit());
     } else {
-      this.contactService.post(this.link.href, form.value);
+      this.contactService.post(this.hyLink.href, form.value).subscribe(() => {
+        console.warn(
+          'we do not have a response that can be used to show the details'
+        );
+        this.cancel();
+      });
     }
+  }
+
+  resetEdit() {
+    this.hyLink = this.self;
   }
 
   cancel() {

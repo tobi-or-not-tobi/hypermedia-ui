@@ -56,6 +56,7 @@ createLastLink = query => {
   const page = getPage(query);
   const lastPage =
     Math.round((contactData.contacts.length + size / 2 + 1) / size) - 1;
+
   return lastPage > page
     ? [
         {

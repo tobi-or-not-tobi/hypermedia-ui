@@ -9,7 +9,7 @@ import { FormGroup, FormControl, NgForm } from '@angular/forms';
 })
 export class PaginationComponent {
   @Input() pagination;
-  @Output() openLink = new EventEmitter<HyLink>();
+  @Output() openLink = new EventEmitter<string>();
   @Output() paginate = new EventEmitter<any>();
 
   paginationForm = new FormGroup({
@@ -18,7 +18,7 @@ export class PaginationComponent {
   });
 
   open(link: HyLink) {
-    this.openLink.emit(link);
+    if (link) this.openLink.emit(link.href);
   }
 
   change(form: NgForm) {
@@ -26,5 +26,13 @@ export class PaginationComponent {
       page: form.controls.page.value,
       size: form.controls.pageSize.value
     });
+  }
+
+  get pageNum() {
+    return Math.round(
+      (this.pagination.totalcount + this.pagination.size / 2 + 1) /
+        this.pagination.size -
+        1
+    );
   }
 }

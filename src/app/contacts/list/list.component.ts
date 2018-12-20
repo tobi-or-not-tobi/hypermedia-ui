@@ -49,7 +49,6 @@ export class ContactListComponent implements OnInit {
   }
 
   test(arg) {
-    console.log(arg);
     this.contactService.paginate(arg);
   }
 }

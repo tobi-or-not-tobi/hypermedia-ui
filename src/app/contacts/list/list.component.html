@@ -1,34 +1,52 @@
-<app-contact-details [link]="link"></app-contact-details>
+<h1 class="title">Contacts</h1>
+<p class="subtitle">We improve our <strong>API</strong> all the time!</p>
 
-<div *ngIf="(list$ | async) as data">
-  <app-pagination
-    [pagination]="data.pagination"
-    (openLink)="openLink($event)"
-    (paginate)="test($event)"
-  ></app-pagination>
-
-  <app-link
-    rel="create"
-    [links]="data.links"
-    (open)="create($event)"
-  ></app-link>
-
-  <div *ngFor="let item of data.contacts">
-    <app-link
-      [link]=""
-      rel="self"
-      [links]="item.links"
-      (open)="open(item, 'self')"
-      >open
-    </app-link>
-
-    {{ item.contact.firstName }} {{ item.contact.lastName }}
-
-    <app-link rel="update" [links]="item.links" (open)="open(item, 'update')"
-      >edit</app-link
-    >
-    <app-link rel="remove" [links]="item.links" (open)="open(item, 'remove')"
-      >trash</app-link
-    >
+<ng-container *ngIf="(list$ | async) as data">
+  <div class="columns">
+    <div class="column">
+      <app-pagination
+        [pagination]="data.pagination"
+        (openLink)="openLink($event)"
+        (paginate)="test($event)"
+      ></app-pagination>
+    </div>
+    <div class="column"></div>
   </div>
-</div>
+  <div class="columns">
+    <div class="column">
+      <nav class="panel">
+        <p class="panel-heading">Contacts</p>
+
+        <div class="panel-block">
+          <button
+            link
+            linkRel="create"
+            [linkItems]="data.links"
+            (open)="create($event)"
+            class="button is-link is-outlined is-fullwidth"
+          >
+            Create contact
+          </button>
+        </div>
+
+        <a
+          class="panel-block"
+          [link]
+          linkRel="self"
+          [linkItems]="item.links"
+          (open)="open(item, 'self')"
+          *ngFor="let item of data.contacts"
+        >
+          <span class="panel-icon">
+            <i class="fas fa-user" aria-hidden="true"></i>
+          </span>
+
+          {{ item.contact.firstName }} {{ item.contact.lastName }}
+        </a>
+      </nav>
+    </div>
+    <div class="column">
+      <app-contact-details [hyLink]="link"></app-contact-details>
+    </div>
+  </div>
+</ng-container>

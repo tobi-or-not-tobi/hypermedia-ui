@@ -3,7 +3,7 @@
 listEndpoint = '/contacts';
 postEndpoint = '/contacts/postit';
 detailEndpoint = '/contacts/:id';
-patchEndpoint = '/v2/contacts/patcy/:id';
+patchEndpoint = '/contacts/:id';
 deleteEndpoint = '/contacts/:id/delete';
 
 createListLinks = (query, page, size) => {

@@ -1,5 +1,52 @@
 <ng-container *ngIf="pagination">
-  <form #paginationForm="ngForm" (change)="change(paginationForm)">
+  <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+    <a
+      class="pagination-previous"
+      link
+      linkRel="previous"
+      [linkItems]="pagination.links"
+      (open)="open($event)"
+    >
+      Previous
+    </a>
+
+    <a
+      class="pagination-next"
+      link
+      linkRel="next"
+      [linkItems]="pagination.links"
+      (open)="open($event)"
+      >Next</a
+    >
+
+    <ul class="pagination-list">
+      <li>
+        <a
+          class="pagination-link"
+          link
+          linkRel="first"
+          [linkItems]="pagination.links"
+          (open)="open($event)"
+          >1</a
+        >
+      </li>
+
+      <li><span class="pagination-ellipsis">&hellip;</span></li>
+
+      <li>
+        <a
+          class="pagination-link"
+          link
+          linkRel="last"
+          [linkItems]="pagination.links"
+          (open)="open($event)"
+          >{{ pageNum }}</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <!-- <form #paginationForm="ngForm" (change)="change(paginationForm)">
     <label>
       page <input type="text" name="page" [(ngModel)]="pagination.page" />
     </label>
@@ -10,25 +57,5 @@
   </form>
 
   total: {{ pagination?.totalcount }} <br />
-
-  <app-link
-    rel="first"
-    [links]="pagination.links"
-    (open)="open($event.href)"
-  ></app-link>
-  <app-link
-    rel="previous"
-    [links]="pagination.links"
-    (open)="open($event.href)"
-  ></app-link>
-  <app-link
-    rel="next"
-    [links]="pagination.links"
-    (open)="open($event.href)"
-  ></app-link>
-  <app-link
-    rel="last"
-    [links]="pagination.links"
-    (open)="open($event.href)"
-  ></app-link>
+-->
 </ng-container>
