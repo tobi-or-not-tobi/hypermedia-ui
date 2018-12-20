@@ -21,8 +21,8 @@ export class LinkDirective implements AfterViewInit, OnChanges {
 
   @Output() open = new EventEmitter<HyLink>();
 
-  @HostListener('click') onClick() {
-    this.go();
+  @HostListener('click', ['$event']) onClick(event) {
+    this.go(event);
   }
 
   constructor(private ref: ElementRef) {}
@@ -37,7 +37,8 @@ export class LinkDirective implements AfterViewInit, OnChanges {
     this.resolveLink();
   }
 
-  private go() {
+  private go(event: MouseEvent) {
+    event.stopPropagation();
     this.open.emit(this.link);
   }
 
