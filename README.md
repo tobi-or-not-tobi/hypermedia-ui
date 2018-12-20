@@ -1,27 +1,43 @@
-# Hypermedia
+# Hypermedia client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.3.
+The aim of this small client is to validate the usage and complexity of an _explorable_ api. Explorable API's, also known as hypermedia provide links to endpoints. The purpose of those links is used for 2 reasons:
 
-## Development server
+1. Configurable endpoints – avoid hardcoded endpoints in the client
+2. Avoid business logic – clients simply follow links to certain actions rather then implement business logic themselves
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Explorable API
 
-## Code scaffolding
+The API provides links using the following format:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```json
+links: [
+    {
+        rel: "self",
+        href: "/contacts",
+        method: "GET"
+    }
+]
+```
 
-## Build
+The API provides links to:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- self
+- create
+- update
+- replace
+- remove
 
-## Running unit tests
+## Lessons learnt
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Configurable endpoints
 
-## Running end-to-end tests
+The first approach was to explore the API for all possible use-cases. We've seen that there are a number of limitations when avoid using hardcoded endpoints, and fully depend on the explorable API:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+- the initial call to the backend must be hardcoded anyway, unless the backend root endpoint would be used to get a handle to the main endpoints. This however requires an inital request that would freeze the client until this is processed.
+- clients that completely depend on configurable endpoints cannot use decoupled, stateful URLs for deeplinks. The deeplink doesn't know the initial endpoint. For example, if the client has a URL to `/customers/123`, and the backend is `/v2/cust/:id`, the client isn't able to map the two in a generic way.
+- Endpoints will not change often, it's mainly the payload of the APIs. An explorable API without details on the payload model seems useless.
+- For client development, a generated client makes much more sense.
 
-## Further help
+### Generated clients
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+TODO
