@@ -7,7 +7,7 @@ const TOTAL_COUNT = 25;
 const contacts = [];
 
 create = (firstName, lastName, email) => {
-  const id = faker.random.uuid();
+  const id = contacts.length.toString();
   contacts.push({
     contact: {
       id: id,
