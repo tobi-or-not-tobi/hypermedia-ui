@@ -1,17 +1,16 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  BASE_PATH,
   HyContact,
   HyLink,
-  Contact
+  Contact,
+  ContactsService as BackendClient
 } from 'src/app/typescript-angular-client-generated';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ContactsService } from '../contacts.service';
 import { NgForm } from '@angular/forms';
-
-const ENDPOINT = '/contacts';
+import { filter } from 'rxjs/operators';
+import { RouteActions } from '../actions';
+import { ContactsService } from '../contacts.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -19,50 +18,77 @@ const ENDPOINT = '/contacts';
   styleUrls: ['./details.component.scss']
 })
 export class ContactDetailsComponent {
-  @Input() hyLink;
-  self;
+  contact = {};
+  links;
 
-  details$: Observable<HyContact>;
+  action: RouteActions;
 
-  model = {
-    firstName: undefined,
-    lastName: undefined,
-    email: undefined
-  };
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private backendClient: BackendClient,
+    private contactService: ContactsService
+  ) {
+    this.activatedRoute.params.pipe(filter(p => p.contactId)).subscribe(p =>
+      this.backendClient.getContact(p.contactId).subscribe(details => {
+        this.contact = details.contact;
+        this.links = details.links;
+      })
+    );
 
-  constructor(private contactService: ContactsService) {
-    this.details$ = this.contactService.details$;
+    this.activatedRoute.data
+      .pipe(filter(d => d.action))
+      .subscribe(d => (this.action = d.action));
   }
 
-  edit(link: HyLink) {
-    this.self = this.hyLink;
-    this.hyLink = link;
+  get isReadonly() {
+    return this.action === RouteActions.VIEW;
   }
 
-  remove(link: HyLink) {
-    this.contactService.delete(link.href);
+  get isEditable() {
+    return this.action === RouteActions.EDIT;
+  }
+
+  get isCreate() {
+    return this.action === RouteActions.CREATE;
+  }
+
+  edit(contact: Contact) {
+    this.router.navigate(['contacts', contact.id, 'edit']);
+  }
+
+  remove(contact: Contact) {
+    this.backendClient.removeContact(contact.id).subscribe(() => {
+      this.cancel();
+      this.contactService.loadList();
+    });
   }
 
   save(form: NgForm) {
     if (form.value.id) {
-      this.contactService
-        .patch(this.hyLink.href, form.value)
-        .subscribe(() => this.resetEdit());
+      this.backendClient
+        .replaceContact(form.value.id, form.value)
+        .subscribe(() => {
+          this.cancelEdit(form.value);
+          this.contactService.loadList();
+        });
     } else {
-      this.contactService.post(this.hyLink.href, form.value).subscribe(() => {
+      this.backendClient.createContact(form.value).subscribe(response => {
         console.warn(
-          'we do not have a response that can be used to show the details'
+          'we do not have a response that can be used to show the details',
+          response
         );
+        this.contactService.loadList();
         this.cancel();
       });
     }
   }
 
-  resetEdit() {
-    this.hyLink = this.self;
+  cancelEdit(contact: Contact) {
+    this.router.navigate(['contacts', contact.id]);
   }
 
   cancel() {
-    this.contactService.clearDetails();
+    this.router.navigate(['contacts']);
   }
 }

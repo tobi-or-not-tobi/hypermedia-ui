@@ -1,26 +1,25 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { BASE_PATH } from '../typescript-angular-client-generated';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 
-const ENDPOINT = '/contacts';
+import { ContactsService as BackendClient } from 'src/app/typescript-angular-client-generated';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
-  private list: BehaviorSubject<any> = new BehaviorSubject(null);
-  details$: BehaviorSubject<any> = new BehaviorSubject(null);
+  list$: BehaviorSubject<any> = new BehaviorSubject(null);
+  page$: BehaviorSubject<any> = new BehaviorSubject(null);
+  size$: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  constructor(
-    @Inject(BASE_PATH) private basePath: string,
-    private httpClient: HttpClient
-  ) {}
-
-  getList(): Observable<any> {
-    this.loadList();
-    return this.list;
+  constructor(private backendClient: BackendClient) {
+    // this.page$.subscribe(page => console.log('page', page));
+    combineLatest(this.page$, this.size$).subscribe(
+      ([page, size]: [number, number]) => {
+        this.loadList(page, size);
+      }
+    );
   }
 
   paginate(paramValue) {
@@ -28,57 +27,20 @@ export class ContactsService {
     params = params.append('page', paramValue.page);
     params = params.append('size', paramValue.size);
 
-    this.loadList(ENDPOINT, params);
+    // this.loadList(ENDPOINT, params);
   }
 
-  loadList(endpoint: string = ENDPOINT, params: HttpParams = new HttpParams()) {
-    this.get(endpoint, params).subscribe(contacts => this.list.next(contacts));
+  loadList(page: number = 1, size: number = 10) {
+    this.backendClient
+      .getContacts(page, size)
+      .subscribe(contacts => this.list$.next(contacts));
   }
 
-  loadDetails(endpoint: string): Observable<any> {
-    this.httpClient.get(`${this.basePath}${endpoint}`).subscribe(details => {
-      this.details$.next(details);
-    });
-    return this.details$;
+  set page(page) {
+    this.page$.next(page);
   }
 
-  clearDetails() {
-    this.details$.next(null);
-  }
-
-  post(endpoint: string, body: string): Observable<any> {
-    const observable = this.httpClient
-      .post(`${this.basePath}${endpoint}`, body)
-      .pipe(tap(() => this.loadList()));
-    observable.subscribe();
-    return observable;
-  }
-
-  get(
-    endpoint: string,
-    params: HttpParams = new HttpParams()
-  ): Observable<any> {
-    return this.httpClient.get(`${this.basePath}${endpoint}`, { params });
-  }
-
-  patch(endpoint: string, body: string): Observable<any> {
-    const observable = this.httpClient
-      .patch(`${this.basePath}${endpoint}`, body)
-      .pipe(tap(() => this.loadList()));
-    observable.subscribe();
-    return observable;
-  }
-
-  delete(endpoint: string): Observable<any> {
-    const observable = this.httpClient
-      .delete(`${this.basePath}${endpoint}`)
-      .pipe(
-        tap(() => {
-          this.details$.next(null);
-          this.loadList();
-        })
-      );
-    observable.subscribe();
-    return observable;
+  set size(size) {
+    this.size$.next(size);
   }
 }

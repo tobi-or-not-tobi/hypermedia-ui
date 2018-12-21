@@ -2,12 +2,12 @@ var faker = require('faker');
 
 var links = require('./links');
 
-const TOTAL_COUNT = 25;
+const TOTAL_COUNT = 50;
 
 const contacts = [];
 
 create = (firstName, lastName, email) => {
-  const id = faker.random.uuid();
+  const id = contacts.length.toString();
   contacts.push({
     contact: {
       id: id,
@@ -35,4 +35,8 @@ while (contacts.length < TOTAL_COUNT) {
   create(faker.name.firstName(), faker.name.lastName(), faker.internet.email());
 }
 
-module.exports = { contacts, create, sort };
+getContacts = () => {
+  return contacts;
+};
+
+module.exports = { getContacts, create, sort };
