@@ -1,6 +1,6 @@
 var contactData = require('./data');
 
-let DEFAULT_PAGE_SIZE = 5;
+let DEFAULT_PAGE_SIZE = 10;
 
 getPage = query => {
   return query.page ? Number(query.page) : 1;
@@ -26,7 +26,7 @@ createPreviousLink = query => {
 createNextLink = query => {
   const next = getPage(query) + 1;
   const size = getSize(query);
-  return (next - 1) * size < contactData.contacts.length
+  return (next - 1) * size < contactData.getContacts().length
     ? [
         {
           href: `/contacts?page=${next}&size=${getSize(query)}`,
@@ -40,7 +40,7 @@ createNextLink = query => {
 createFirstLink = query => {
   const size = getSize(query);
   const page = getPage(query);
-  return page !== 1 && size < contactData.contacts.length
+  return page !== 1 && size < contactData.getContacts().length
     ? [
         {
           href: `/contacts?page=1&size=${getSize(query)}`,
@@ -55,7 +55,7 @@ createLastLink = query => {
   const size = getSize(query);
   const page = getPage(query);
   const lastPage =
-    Math.round((contactData.contacts.length + size / 2 + 1) / size) - 1;
+    Math.round((contactData.getContacts().length + size / 2 + 1) / size) - 1;
 
   return lastPage > page
     ? [
@@ -72,7 +72,7 @@ create = query => {
   return {
     page: getPage(query),
     size: getSize(query),
-    totalcount: contactData.contacts.length,
+    totalcount: contactData.getContacts().length,
     links: [
       ...createFirstLink(query),
       ...createPreviousLink(query),
