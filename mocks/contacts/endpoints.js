@@ -59,6 +59,18 @@ const patchContactDetails = {
   }
 };
 
+const putContactDetails = {
+  path: links.endpoints.putEndpoint,
+  method: 'PUT',
+  cache: false,
+  template: (params, query, body) => {
+    const details = data
+      .getContacts()
+      .find(contact => contact.contact.id === params.id);
+    Object.assign(details.contact, body);
+  }
+};
+
 const deleteContactDetails = {
   path: links.endpoints.deleteEndpoint,
   method: 'DELETE',
@@ -76,6 +88,7 @@ module.exports = [
   getContactList,
   postContact,
   getContactDetails,
+  putContactDetails,
   patchContactDetails,
   deleteContactDetails
 ];
