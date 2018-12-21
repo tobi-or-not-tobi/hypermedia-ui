@@ -1,9 +1,10 @@
 # Hypermedia client
 
-The aim of this small client is to validate the usage and complexity of an _explorable_ api. Explorable API's, also known as hypermedia provide links to endpoints. The purpose of those links is used for 2 reasons:
+The aim of this small client is to validate the usage, complexity and impact of an _explorable_ API. Explorable API's, also known as hypermedia, provide links to possible endpoints. Those links are provided for multiple reasons:
 
-1. Configurable endpoints – avoid hardcoded endpoints in the client
-2. Avoid business logic – clients simply follow links to certain actions rather then implement business logic themselves
+- Configurable endpoints – avoid hardcoded endpoints in the client.
+- Avoid client side business logic – clients can simply follow links to certain actions rather then implement business logic themselves. This simplfies the client logic, and can be implemented and maintained in the backend only.
+- Documentation – the API provides a list of potential endpoints that can be accessed by the client.
 
 ## Setup instructions
 
@@ -43,7 +44,7 @@ The API provides links to:
 - replace
 - remove
 
-## Lessons learnt
+## Approaches
 
 ### Configurable endpoints
 
@@ -56,4 +57,9 @@ The first approach was to explore the API for all possible use-cases. We've seen
 
 ### Generated clients
 
-TODO
+Based on the first approach, we've learnt the following:
+
+- Using explorable endpoints, blocks us in using a _generated client_. Without a generated client, the API interaction must be implemented manually.
+- Furthermore, whenever an endpoint change, it's most likely the data model of the payload rather then the endpoint. This would require a refactoring of the client logic anyway, changing the endpoint is the least of the concerns.
+- Since the payload will most likely change anyway over time, we must maintain multiple versions of the API. Only depending on explorable endpoints is not enough.
+- There's a lot of value in which endpoints can be used and when they can be used. The availability of a links with a certain _rel_ will save client-side business logic.

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { HyPaginationPagination } from '../typescript-angular-client-generated';
 import { ContactsService } from '../contacts/contacts.service';
 
@@ -7,32 +7,38 @@ import { ContactsService } from '../contacts/contacts.service';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnChanges {
   @Input() pagination: HyPaginationPagination;
 
-  pageLength: number;
-  pages = [];
+  pageRange = [];
 
   constructor(private contactService: ContactsService) {}
 
-  ngOnInit() {
-    this.pageLength = Math.round(
+  ngOnChanges() {
+    if (this.pagination.page > this.pageLength) {
+      this.page = this.pageLength;
+    }
+    this.pageRange = this.paginate(this.pagination.page, this.pageLength);
+  }
+
+  get pageLength() {
+    return Math.round(
       (this.pagination.totalcount + this.pagination.size / 2) /
         this.pagination.size
     );
-    for (let i = 0; i < this.pageLength; i++) {
-      this.pages.push(i + 1);
-    }
   }
 
-  openPage(page: number) {
-    if (page <= 0 && page > this.pageLength) return;
-
+  set page(page: number) {
+    if (page <= 0 || page > this.pageLength) return;
     this.contactService.page$.next(page);
   }
 
+  set size(size: number) {
+    this.contactService.size$.next(size);
+  }
+
   get hasNext() {
-    return this.pagination.page < this.pages.length;
+    return this.pagination.page < this.pageLength;
   }
   get hasPrevious() {
     return this.pagination.page - 1 > 0;
@@ -45,4 +51,30 @@ export class PaginationComponent implements OnInit {
         1
     );
   }
+
+  // thanks to https://gist.github.com/kottenator/9d936eb3e4e3c3e02598
+  private paginate = (currentPage: number, pageCount: number) => {
+    const delta = 2;
+
+    let range = [];
+    for (
+      let i = Math.max(2, currentPage - delta);
+      i <= Math.min(pageCount - 1, currentPage + delta);
+      i++
+    ) {
+      range.push(i);
+    }
+
+    if (currentPage - delta > 2) {
+      range.unshift('...');
+    }
+    if (currentPage + delta < pageCount - 1) {
+      range.push('...');
+    }
+
+    range.unshift(1);
+    range.push(pageCount);
+
+    return range;
+  };
 }

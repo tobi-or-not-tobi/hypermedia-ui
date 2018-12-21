@@ -1,29 +1,41 @@
 <ng-container *ngIf="pagination">
-  <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
-    <a
-      class="pagination-previous"
-      [class.disabled]="!hasPrevious"
-      (click)="openPage(pagination.page - 1)"
-    >
-      Previous
-    </a>
+  <div class="pagination-wrapper">
+    <nav class="pagination" role="navigation" aria-label="pagination">
+      <a
+        class="pagination-previous"
+        [class.disabled]="!hasPrevious"
+        (click)="page = pagination.page - 1"
+      >
+        Previous
+      </a>
 
-    <a
-      class="pagination-next"
-      [class.disabled]="!hasNext"
-      (click)="openPage(pagination.page + 1)"
-      >Next</a
-    >
+      <a
+        class="pagination-next"
+        [class.disabled]="!hasNext"
+        (click)="page = pagination.page + 1"
+        >Next</a
+      >
 
-    <ul class="pagination-list">
-      <li *ngFor="let page of pages">
-        <a
-          class="pagination-link"
-          [class.disabled]="page === pagination.page"
-          (click)="openPage(page)"
-          >{{ page }}</a
+      <ul class="pagination-list">
+        <li *ngFor="let p of pageRange">
+          <a
+            class="pagination-link"
+            [class.is-current]="p === pagination.page"
+            (click)="page = p"
+            >{{ p }}</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <div class="select">
+      <select #sizeControl (change)="size = sizeControl.value">
+        <option>Page size</option>
+        <option
+          [attr.selected]="size === pagination.size ? 'true' : null"
+          *ngFor="let size of [5, 10, 25, 50]"
+          >{{ size }}</option
         >
-      </li>
-    </ul>
-  </nav>
+      </select>
+    </div>
+  </div>
 </ng-container>

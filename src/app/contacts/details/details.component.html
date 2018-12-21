@@ -58,7 +58,7 @@
 
     <footer class="card-footer">
       <ng-container *ngIf="isReadonly">
-        <a class="card-footer-item" (click)="cancel()">cancel</a>
+        <a class="card-footer-item" (click)="cancel()">Cancel</a>
         <a
           link
           linkRel="update"
@@ -79,12 +79,12 @@
       </ng-container>
 
       <ng-container *ngIf="isEditable">
-        <a class="card-footer-item" (click)="cancelEdit(contact)">cancel</a>
+        <a class="card-footer-item" (click)="cancelEdit(contact)">Cancel</a>
         <a class="card-footer-item" (click)="save(detailForm)">save</a>
       </ng-container>
 
       <ng-container *ngIf="isCreate">
-        <a class="card-footer-item" (click)="cancel()">cancel</a>
+        <a class="card-footer-item" (click)="cancel()">Cancel</a>
         <a class="card-footer-item" (click)="save(detailForm)">save</a>
       </ng-container>
     </footer>
