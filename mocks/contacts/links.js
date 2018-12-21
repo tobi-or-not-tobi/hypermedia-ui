@@ -1,10 +1,11 @@
 // var pagination = require('./pagination');
 
 listEndpoint = '/contacts';
-postEndpoint = '/contacts/postit';
+postEndpoint = '/contacts';
 detailEndpoint = '/contacts/:id';
 patchEndpoint = '/contacts/:id';
-deleteEndpoint = '/contacts/:id/delete';
+putEndpoint = '/contacts/:id';
+deleteEndpoint = '/contacts/:id';
 
 createListLinks = (query, page, size) => {
   return [
@@ -22,8 +23,8 @@ createListLinks = (query, page, size) => {
 };
 
 createDetailLinks = id => {
-  const random_edit = Math.random() >= 0.5;
-  const random_delete = random_edit && Math.random() >= 0.5;
+  const random_edit = Math.random() >= 0.3;
+  const random_delete = random_edit && Math.random() >= 0.3;
   const links = [];
   links.push({
     href: resolveId(detailEndpoint, id),
@@ -63,6 +64,7 @@ module.exports = {
     listEndpoint,
     postEndpoint,
     detailEndpoint,
+    putEndpoint,
     patchEndpoint,
     deleteEndpoint
   }
