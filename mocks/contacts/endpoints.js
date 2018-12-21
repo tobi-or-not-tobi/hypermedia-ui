@@ -80,7 +80,7 @@ const deleteContactDetails = {
       .getContacts()
       .find(contact => contact.contact.id === pathParameters.id);
     const index = data.getContacts().indexOf(detail);
-    data.getContacts().splice(index, index + 1);
+    data.getContacts().splice(index, 1);
   }
 };
 
