@@ -44,7 +44,10 @@ export class ContactListComponent implements OnInit {
   }
 
   delete(item: HyContact) {
-    this.backendClient.removeContact(item.contact.id);
+    this.backendClient.removeContact(item.contact.id).subscribe(() => {
+      this.contactService.loadList();
+      this.router.navigate(['contacts']);
+    });
   }
 
   openLink(endpoint: string) {
