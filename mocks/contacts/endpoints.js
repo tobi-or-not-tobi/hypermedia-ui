@@ -64,11 +64,11 @@ const deleteContactDetails = {
   method: 'DELETE',
   cache: false,
   template: pathParameters => {
-    const detail = data.contacts.find(
-      contact => contact.contact.id === pathParameters.id
-    );
+    const detail = data
+      .getContacts()
+      .find(contact => contact.contact.id === pathParameters.id);
     const index = data.getContacts().indexOf(detail);
-    data.contacts.splice(index, index + 1);
+    data.getContacts().splice(index, index + 1);
   }
 };
 
