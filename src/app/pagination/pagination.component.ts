@@ -15,6 +15,9 @@ export class PaginationComponent implements OnChanges {
   constructor(private contactService: ContactsService) {}
 
   ngOnChanges() {
+    if (this.pagination.page > this.pageLength) {
+      this.page = this.pageLength;
+    }
     this.pageRange = this.paginate(this.pagination.page, this.pageLength);
   }
 
