@@ -43,6 +43,7 @@ export class LinkDirective implements AfterViewInit, OnChanges {
   }
 
   private resolveLink() {
+    if (!this.linkItems) return;
     this.link = this.linkItems.find(l => {
       return l.rel === this.linkRel;
     });
