@@ -1,5 +1,5 @@
 <h1 class="title">Contacts</h1>
-<p class="subtitle">We improve our <strong>API</strong> all the time!</p>
+<p class="subtitle">We improve our <strong>APIs</strong> all the time!</p>
 
 <ng-container *ngIf="(list$ | async) as data">
   <div class="columns">
@@ -66,9 +66,6 @@
         </a>
       </nav>
     </div>
-    <div class="column">
-      <router-outlet></router-outlet>
-      <!-- <app-contact-details [hyLink]="link"></app-contact-details> -->
-    </div>
+    <div class="column"><router-outlet></router-outlet></div>
   </div>
 </ng-container>

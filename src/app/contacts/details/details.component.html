@@ -1,13 +1,10 @@
-<div class="card" *ngIf="(details$ | async) as details">
+<div class="card">
   <form #detailForm="ngForm" (submit)="save(detailForm)">
-    <ng-container *ngIf="!isCreate">
+    <ng-container>
       <div class="card-image" [class.collapse]="!isReadonly">
         <figure class="image is-4by3">
           <img
-            [src]="
-              'https://loremflickr.com/daily/g/320/240/girl?' +
-              details.contact.id
-            "
+            [src]="'https://loremflickr.com/daily/g/320/240/girl?' + contact.id"
             alt="Placeholder image"
           />
         </figure>
@@ -19,8 +16,7 @@
             <figure class="image is-48x48">
               <img
                 [src]="
-                  'https://loremflickr.com/daily/g/320/240/girl?' +
-                  details.contact.id
+                  'https://loremflickr.com/daily/g/320/240/girl?' + contact.id
                 "
                 alt="Placeholder image"
               />
@@ -28,15 +24,16 @@
           </div>
           <div class="media-content">
             <p class="title is-4">
-              {{ details.contact.firstName }} {{ details.contact.lastName }}
+              {{ contact.firstName }} {{ contact.lastName }}
             </p>
-            <p class="subtitle is-6">{{ details.contact.email }}</p>
+            <p class="subtitle is-6">{{ contact.email }}</p>
           </div>
         </div>
       </div>
     </ng-container>
+
     <div class="card-content" *ngIf="isEditable || isCreate">
-      <input type="hidden" name="id" [(ngModel)]="details.contact.id" />
+      <input type="hidden" name="id" [(ngModel)]="contact.id" />
       <div
         class="field"
         *ngFor="let field of ['firstName', 'lastName', 'email']"
@@ -49,7 +46,7 @@
             required
             placeholder="Text input"
             [name]="field"
-            [(ngModel)]="details.contact[field]"
+            [(ngModel)]="contact[field]"
           />
 
           <span *ngIf="field === 'email'" class="icon is-small is-left">
@@ -66,8 +63,8 @@
           link
           linkRel="update"
           class="card-footer-item"
-          [linkItems]="details.links"
-          (open)="edit(details.contact)"
+          [linkItems]="links"
+          (open)="edit(contact)"
           >Edit</a
         >
 
@@ -75,20 +72,18 @@
           class="card-footer-item"
           link
           linkRel="remove"
-          [linkItems]="details.links"
-          (open)="remove(details.contact)"
+          [linkItems]="links"
+          (open)="remove(contact)"
           >Delete</a
         >
       </ng-container>
 
       <ng-container *ngIf="isEditable">
-        <a class="card-footer-item" (click)="cancelEdit(details.contact)"
-          >cancel</a
-        >
+        <a class="card-footer-item" (click)="cancelEdit(contact)">cancel</a>
         <a class="card-footer-item" (click)="save(detailForm)">save</a>
       </ng-container>
 
-      <ng-container *ngIf="hyLink?.rel === 'create'">
+      <ng-container *ngIf="isCreate">
         <a class="card-footer-item" (click)="cancel()">cancel</a>
         <a class="card-footer-item" (click)="save(detailForm)">save</a>
       </ng-container>

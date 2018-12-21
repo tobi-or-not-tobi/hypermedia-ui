@@ -18,17 +18,10 @@ import { ContactsService } from '../contacts.service';
   styleUrls: ['./details.component.scss']
 })
 export class ContactDetailsComponent {
-  @Input() hyLink;
-  self;
+  contact = {};
+  links;
 
-  details$: Observable<HyContact>;
   action: RouteActions;
-
-  model = {
-    firstName: undefined,
-    lastName: undefined,
-    email: undefined
-  };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,11 +29,13 @@ export class ContactDetailsComponent {
     private backendClient: BackendClient,
     private contactService: ContactsService
   ) {
-    this.activatedRoute.params
-      .pipe(filter(p => p.contactId))
-      .subscribe(
-        p => (this.details$ = this.backendClient.getContact(p.contactId))
-      );
+    this.activatedRoute.params.pipe(filter(p => p.contactId)).subscribe(p =>
+      this.backendClient.getContact(p.contactId).subscribe(details => {
+        this.contact = details.contact;
+        this.links = details.links;
+      })
+    );
+
     this.activatedRoute.data
       .pipe(filter(d => d.action))
       .subscribe(d => (this.action = d.action));
@@ -83,6 +78,7 @@ export class ContactDetailsComponent {
           'we do not have a response that can be used to show the details',
           response
         );
+        this.contactService.loadList();
         this.cancel();
       });
     }
