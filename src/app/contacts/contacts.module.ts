@@ -27,14 +27,14 @@ const routes: Routes = [
         }
       },
       {
-        path: ':contactId',
+        path: ':contactId/:name',
         component: ContactDetailsComponent,
         data: {
           action: RouteActions.VIEW
         }
       },
       {
-        path: ':contactId/' + RouteActions.EDIT,
+        path: ':contactId/:name/' + RouteActions.EDIT,
         component: ContactDetailsComponent,
         data: {
           action: RouteActions.EDIT

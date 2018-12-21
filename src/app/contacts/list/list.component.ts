@@ -3,7 +3,8 @@ import {
   HyContacts,
   HyLink,
   HyContact,
-  ContactsService as BackendClient
+  ContactsService as BackendClient,
+  Contact
 } from 'src/app/typescript-angular-client-generated';
 import { Observable } from 'rxjs';
 
@@ -35,12 +36,21 @@ export class ContactListComponent implements OnInit {
     this.router.navigate(['contacts', 'create']);
   }
 
-  edit(item: HyContact) {
-    this.router.navigate(['contacts', item.contact.id, 'edit']);
+  open(contact: Contact) {
+    this.router.navigate([
+      'contacts',
+      contact.id,
+      this.contactService.getFullname(contact)
+    ]);
   }
 
-  open(item: HyContact) {
-    this.router.navigate(['contacts', item.contact.id]);
+  edit(contact: Contact) {
+    this.router.navigate([
+      'contacts',
+      contact.id,
+      this.contactService.getFullname(contact),
+      'edit'
+    ]);
   }
 
   delete(item: HyContact) {

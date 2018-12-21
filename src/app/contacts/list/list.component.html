@@ -4,11 +4,7 @@
 <ng-container *ngIf="(list$ | async) as data">
   <div class="columns">
     <div class="column">
-      <app-pagination
-        [pagination]="data.pagination"
-        (openLink)="openLink($event)"
-        (paginate)="paginate($event)"
-      ></app-pagination>
+      <app-pagination [pagination]="data.pagination"></app-pagination>
     </div>
     <div class="column"></div>
   </div>
@@ -22,7 +18,7 @@
             link
             linkRel="create"
             [linkItems]="data.links"
-            (open)="create($event)"
+            (open)="create()"
             class="button is-link is-outlined is-fullwidth"
           >
             Create contact
@@ -34,7 +30,7 @@
           [link]
           linkRel="self"
           [linkItems]="item.links"
-          (open)="open(item)"
+          (open)="open(item.contact)"
           *ngFor="let item of data.contacts"
         >
           <span class="panel-icon">
@@ -47,7 +43,7 @@
               [link]
               linkRel="update"
               [linkItems]="item.links"
-              (open)="edit(item)"
+              (open)="edit(item.contact)"
             >
               <i class="fas fa-edit"></i>
             </a>
@@ -56,7 +52,7 @@
               [link]
               linkRel="remove"
               [linkItems]="item.links"
-              (open)="delete(item)"
+              (open)="delete(item.contact)"
             >
               <i class="fas fa-trash"></i>
             </a>

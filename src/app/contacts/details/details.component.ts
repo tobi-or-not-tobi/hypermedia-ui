@@ -54,7 +54,12 @@ export class ContactDetailsComponent {
   }
 
   edit(contact: Contact) {
-    this.router.navigate(['contacts', contact.id, 'edit']);
+    this.router.navigate([
+      'contacts',
+      contact.id,
+      this.contactService.getFullname(contact),
+      'edit'
+    ]);
   }
 
   remove(contact: Contact) {
@@ -85,7 +90,11 @@ export class ContactDetailsComponent {
   }
 
   cancelEdit(contact: Contact) {
-    this.router.navigate(['contacts', contact.id]);
+    this.router.navigate([
+      'contacts',
+      contact.id,
+      this.contactService.getFullname(contact)
+    ]);
   }
 
   cancel() {

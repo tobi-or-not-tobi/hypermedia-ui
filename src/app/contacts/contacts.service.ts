@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { BASE_PATH } from '../typescript-angular-client-generated';
+import { BASE_PATH, Contact } from '../typescript-angular-client-generated';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 
 import { ContactsService as BackendClient } from 'src/app/typescript-angular-client-generated';
@@ -14,7 +14,6 @@ export class ContactsService {
   size$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private backendClient: BackendClient) {
-    // this.page$.subscribe(page => console.log('page', page));
     combineLatest(this.page$, this.size$).subscribe(
       ([page, size]: [number, number]) => {
         this.loadList(page, size);
@@ -22,12 +21,8 @@ export class ContactsService {
     );
   }
 
-  paginate(paramValue) {
-    let params = new HttpParams();
-    params = params.append('page', paramValue.page);
-    params = params.append('size', paramValue.size);
-
-    // this.loadList(ENDPOINT, params);
+  getFullname(contact: Contact) {
+    return contact.firstName.toLowerCase() + contact.lastName.toLowerCase();
   }
 
   loadList(page: number = 1, size: number = 10) {
