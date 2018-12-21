@@ -34,7 +34,7 @@
           [link]
           linkRel="self"
           [linkItems]="item.links"
-          (open)="open(item, 'self')"
+          (open)="open(item)"
           *ngFor="let item of data.contacts"
         >
           <span class="panel-icon">
@@ -47,7 +47,7 @@
               [link]
               linkRel="update"
               [linkItems]="item.links"
-              (open)="open(item, 'update')"
+              (open)="edit(item)"
             >
               <i class="fas fa-edit"></i>
             </a>
@@ -56,7 +56,7 @@
               [link]
               linkRel="remove"
               [linkItems]="item.links"
-              (open)="open(item, 'remove')"
+              (open)="delete(item)"
             >
               <i class="fas fa-trash"></i>
             </a>
@@ -67,7 +67,8 @@
       </nav>
     </div>
     <div class="column">
-      <app-contact-details [hyLink]="link"></app-contact-details>
+      <router-outlet></router-outlet>
+      <!-- <app-contact-details [hyLink]="link"></app-contact-details> -->
     </div>
   </div>
 </ng-container>

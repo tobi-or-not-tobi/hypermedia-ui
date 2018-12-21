@@ -2,7 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   HyContacts,
   HyLink,
-  HyContact
+  HyContact,
+  ContactsService as BackendClient
 } from 'src/app/typescript-angular-client-generated';
 import { Observable } from 'rxjs';
 
@@ -20,35 +21,39 @@ export class ContactListComponent implements OnInit {
   link: HyLink;
 
   constructor(
+    private backendClient: BackendClient,
     private contactService: ContactsService,
-    private cd: ChangeDetectorRef
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.list$ = this.contactService.getList();
+    this.list$ = this.contactService.list$;
+    this.contactService.loadList();
   }
 
-  create(link: HyLink) {
-    this.contactService.details$.next({ contact: {} });
-    this.link = link;
+  create() {
+    this.router.navigate(['contacts', 'create']);
   }
 
-  open(item: HyContact, action: string) {
-    this.link = item.links.find(l => l.rel === action);
-    if (action === 'self' || action === 'update') {
-      const link = item.links.find(l => l.rel === 'self');
-      this.contactService.loadDetails(link.href);
-    }
-    if (action === 'remove') {
-      this.contactService.delete(this.link.href);
-    }
+  edit(item: HyContact) {
+    this.router.navigate(['contacts', item.contact.id, 'edit']);
+  }
+
+  open(item: HyContact) {
+    this.router.navigate(['contacts', item.contact.id]);
+  }
+
+  delete(item: HyContact) {
+    this.backendClient.removeContact(item.contact.id);
   }
 
   openLink(endpoint: string) {
-    this.contactService.loadList(endpoint);
+    console.log('end', endpoint);
+    // this.customContactService.loadList(endpoint);
   }
 
   paginate(arg) {
-    this.contactService.paginate(arg);
+    console.log('paginate', arg);
+    // this.customContactService.paginate(arg);
   }
 }

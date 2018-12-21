@@ -1,11 +1,11 @@
 <div class="card" *ngIf="(details$ | async) as details">
   <form #detailForm="ngForm" (submit)="save(detailForm)">
-    <ng-container *ngIf="hyLink?.rel !== 'create'">
-      <div class="card-image" [class.collapse]="hyLink?.rel !== 'self'">
+    <ng-container *ngIf="!isCreate">
+      <div class="card-image" [class.collapse]="!isReadonly">
         <figure class="image is-4by3">
           <img
             [src]="
-              'https://loremflickr.com/daily/g/320/240/boy?' +
+              'https://loremflickr.com/daily/g/320/240/girl?' +
               details.contact.id
             "
             alt="Placeholder image"
@@ -19,7 +19,7 @@
             <figure class="image is-48x48">
               <img
                 [src]="
-                  'https://loremflickr.com/daily/g/320/240/boy?' +
+                  'https://loremflickr.com/daily/g/320/240/girl?' +
                   details.contact.id
                 "
                 alt="Placeholder image"
@@ -35,10 +35,7 @@
         </div>
       </div>
     </ng-container>
-    <div
-      class="card-content"
-      *ngIf="hyLink?.rel === 'update' || hyLink?.rel === 'create'"
-    >
+    <div class="card-content" *ngIf="isEditable || isCreate">
       <input type="hidden" name="id" [(ngModel)]="details.contact.id" />
       <div
         class="field"
@@ -63,14 +60,14 @@
     </div>
 
     <footer class="card-footer">
-      <ng-container *ngIf="hyLink?.rel === 'self'">
+      <ng-container *ngIf="isReadonly">
         <a class="card-footer-item" (click)="cancel()">cancel</a>
         <a
           link
           linkRel="update"
           class="card-footer-item"
           [linkItems]="details.links"
-          (open)="edit($event)"
+          (open)="edit(details.contact)"
           >Edit</a
         >
 
@@ -79,13 +76,15 @@
           link
           linkRel="remove"
           [linkItems]="details.links"
-          (open)="remove($event)"
+          (open)="remove(details.contact)"
           >Delete</a
         >
       </ng-container>
 
-      <ng-container *ngIf="hyLink?.rel === 'update'">
-        <a class="card-footer-item" (click)="resetEdit()">cancel</a>
+      <ng-container *ngIf="isEditable">
+        <a class="card-footer-item" (click)="cancelEdit(details.contact)"
+          >cancel</a
+        >
         <a class="card-footer-item" (click)="save(detailForm)">save</a>
       </ng-container>
 
