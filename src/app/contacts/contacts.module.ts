@@ -7,6 +7,8 @@ import { PaginationModule } from '../pagination/pagination.module';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ContactsService } from './contacts.service';
+import { RouteActions } from './actions';
+
 const routes: Routes = [
   {
     path: '',
@@ -15,7 +17,30 @@ const routes: Routes = [
   },
   {
     path: 'contacts',
-    component: ContactListComponent
+    component: ContactListComponent,
+    children: [
+      {
+        path: RouteActions.CREATE,
+        component: ContactDetailsComponent,
+        data: {
+          action: RouteActions.CREATE
+        }
+      },
+      {
+        path: ':contactId',
+        component: ContactDetailsComponent,
+        data: {
+          action: RouteActions.VIEW
+        }
+      },
+      {
+        path: ':contactId/' + RouteActions.EDIT,
+        component: ContactDetailsComponent,
+        data: {
+          action: RouteActions.EDIT
+        }
+      }
+    ]
   }
 ];
 
