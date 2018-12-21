@@ -1,3 +1,14 @@
 .disabled {
   opacity: 0.3;
 }
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between;
+  .pagination {
+    flex-basis: 100%;
+  }
+  select {
+    margin-left: 10px;
+  }
+}
