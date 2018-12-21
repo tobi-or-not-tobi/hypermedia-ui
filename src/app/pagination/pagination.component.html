@@ -2,60 +2,28 @@
   <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
     <a
       class="pagination-previous"
-      link
-      linkRel="previous"
-      [linkItems]="pagination.links"
-      (open)="open($event)"
+      [class.disabled]="!hasPrevious"
+      (click)="openPage(pagination.page - 1)"
     >
       Previous
     </a>
 
     <a
       class="pagination-next"
-      link
-      linkRel="next"
-      [linkItems]="pagination.links"
-      (open)="open($event)"
+      [class.disabled]="!hasNext"
+      (click)="openPage(pagination.page + 1)"
       >Next</a
     >
 
     <ul class="pagination-list">
-      <li>
+      <li *ngFor="let page of pages">
         <a
           class="pagination-link"
-          link
-          linkRel="first"
-          [linkItems]="pagination.links"
-          (open)="open($event)"
-          >1</a
-        >
-      </li>
-
-      <li><span class="pagination-ellipsis">&hellip;</span></li>
-
-      <li>
-        <a
-          class="pagination-link"
-          link
-          linkRel="last"
-          [linkItems]="pagination.links"
-          (open)="open($event)"
-          >{{ pageNum }}</a
+          [class.disabled]="page === pagination.page"
+          (click)="openPage(page)"
+          >{{ page }}</a
         >
       </li>
     </ul>
   </nav>
-
-  <!-- <form #paginationForm="ngForm" (change)="change(paginationForm)">
-    <label>
-      page <input type="text" name="page" [(ngModel)]="pagination.page" />
-    </label>
-
-    <select name="pageSize" [(ngModel)]="pagination.size">
-      <option *ngFor="let num of [10, 25, 50, 100]">{{ num }}</option>
-    </select>
-  </form>
-
-  total: {{ pagination?.totalcount }} <br />
--->
 </ng-container>
