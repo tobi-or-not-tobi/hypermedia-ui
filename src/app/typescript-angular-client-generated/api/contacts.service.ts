@@ -40,7 +40,9 @@ export class ContactsService {
 
   constructor(
     protected httpClient: HttpClient,
-    @Optional() @Inject(BASE_PATH) basePath: string,
+    @Optional()
+    @Inject(BASE_PATH)
+    basePath: string,
     @Optional() configuration: Configuration
   ) {
     if (basePath) {
@@ -632,6 +634,7 @@ export class ContactsService {
 
     return this.httpClient.patch(
       `${this.basePath}/contacts/${encodeURIComponent(String(contactId))}`,
+      body,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,

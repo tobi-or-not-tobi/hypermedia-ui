@@ -40,7 +40,9 @@ export class GroupsService {
 
   constructor(
     protected httpClient: HttpClient,
-    @Optional() @Inject(BASE_PATH) basePath: string,
+    @Optional()
+    @Inject(BASE_PATH)
+    basePath: string,
     @Optional() configuration: Configuration
   ) {
     if (basePath) {

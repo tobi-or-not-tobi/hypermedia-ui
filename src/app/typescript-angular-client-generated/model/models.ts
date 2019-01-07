@@ -7,4 +7,3 @@ export * from './hyGroups';
 export * from './hyLink';
 export * from './hyLinks';
 export * from './hyPagination';
-export * from './hyPaginationPagination';

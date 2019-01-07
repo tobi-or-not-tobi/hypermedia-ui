@@ -21,7 +21,8 @@ export class LinkDirective implements AfterViewInit, OnChanges {
 
   @Output() open = new EventEmitter<HyLink>();
 
-  @HostListener('click', ['$event']) onClick(event) {
+  @HostListener('click', ['$event'])
+  onClick(event) {
     this.go(event);
   }
 

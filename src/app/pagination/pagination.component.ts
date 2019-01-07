@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { HyPaginationPagination } from '../typescript-angular-client-generated';
+
 import { ContactsService } from '../contacts/contacts.service';
+import { HyPagination } from '../typescript-angular-client-generated';
 
 @Component({
   selector: 'app-pagination',
@@ -8,7 +9,7 @@ import { ContactsService } from '../contacts/contacts.service';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnChanges {
-  @Input() pagination: HyPaginationPagination;
+  @Input() pagination: HyPagination;
 
   pageRange = [];
 
